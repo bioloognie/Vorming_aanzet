@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vormingslijn — wegwijzer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F3F1E8;
+    --surface: #FFFFFF;
+    --surface-2: #EAE7DA;
+    --primary: #26433A;
+    --primary-dim: #3D5C51;
+    --accent: #B98226;
+    --accent-soft: #EFE0C2;
+    --text: #1E2420;
+    --text-secondary: #5B6259;
+    --border: #DAD6C6;
+  }
+  :root:not([data-theme="light"]) {
+    /* fallback dark handled below via media query too */
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #171B17;
+      --surface: #1F2420;
+      --surface-2: #262B26;
+      --primary: #9FC2B3;
+      --primary-dim: #7FA697;
+      --accent: #D9A94A;
+      --accent-soft: #3A3323;
+      --text: #EDEFE9;
+      --text-secondary: #A5AC9F;
+      --border: #333831;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #171B17;
+    --surface: #1F2420;
+    --surface-2: #262B26;
+    --primary: #9FC2B3;
+    --primary-dim: #7FA697;
+    --accent: #D9A94A;
+    --accent-soft: #3A3323;
+    --text: #EDEFE9;
+    --text-secondary: #A5AC9F;
+    --border: #333831;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+  }
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+  header.page {
+    margin-bottom: 40px;
+  }
+  .eyebrow {
+    font-size: 14px;
+    color: var(--accent);
+    font-weight: 500;
+    margin: 0 0 8px;
+  }
+  h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 500;
+    font-size: 34px;
+    line-height: 1.2;
+    margin: 0 0 16px;
+    color: var(--primary);
+  }
+  .intro {
+    font-size: 16px;
+    color: var(--text-secondary);
+    max-width: 60ch;
+  }
+  .intro strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  nav.roles {
+    display: flex;
+    gap: 8px;
+    margin: 32px 0 28px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0;
+    flex-wrap: wrap;
+  }
+  nav.roles button {
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    background: none;
+    border: none;
+    padding: 10px 4px;
+    margin-right: 20px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    position: relative;
+    top: 1px;
+  }
+  nav.roles button:hover {
+    color: var(--text);
+  }
+  nav.roles button.active {
+    color: var(--primary);
+    border-bottom-color: var(--accent);
+  }
+  nav.roles button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  .role-intro {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+    max-width: 62ch;
+  }
+  .substep-heading {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--primary);
+    font-family: 'Inter', sans-serif;
+    margin: 28px 0 4px;
+  }
+  .substep-heading:first-of-type {
+    margin-top: 4px;
+  }
+
+  .steps {
+    list-style: none;
+    margin: 0 0 32px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .steps li {
+    display: flex;
+    gap: 16px;
+    padding: 18px 0;
+    border-top: 1px solid var(--border);
+  }
+  .steps li:last-child {
+    border-bottom: 1px solid var(--border);
+  }
+  .step-num {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    color: var(--accent);
+    flex-shrink: 0;
+    width: 28px;
+  }
+  .step-body h3 {
+    margin: 0 0 4px;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+  }
+  .step-body p {
+    margin: 0 0 8px;
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+  .step-body a.guide-link {
+    font-size: 14px;
+    color: var(--primary);
+    text-decoration: none;
+    border-bottom: 1px solid var(--primary-dim);
+  }
+  .step-body a.guide-link:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+  .step-body .placeholder {
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .helpbox {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 22px;
+  }
+  .helpbox h3 {
+    margin: 0 0 6px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--primary);
+    font-family: 'Inter', sans-serif;
+  }
+  .helpbox p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  .notice {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin: 28px 0 0;
+  }
+  .notice h3 {
+    margin: 0 0 6px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--primary);
+    font-family: 'Inter', sans-serif;
+  }
+  .notice p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  .roadmap {
+    margin: 4px 0 40px;
+  }
+  .roadmap h3 {
+    margin: 0 0 18px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--primary);
+    font-family: 'Inter', sans-serif;
+  }
+  .roadmap-track {
+    position: relative;
+    display: flex;
+  }
+  .roadmap-track::before {
+    content: '';
+    position: absolute;
+    top: 17px;
+    left: 24px;
+    right: 24px;
+    height: 1px;
+    background: var(--border);
+    z-index: 0;
+  }
+  .roadmap-node {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .roadmap-circle {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    color: var(--text-secondary);
+  }
+  .roadmap-node.early .roadmap-circle {
+    border-color: var(--primary-dim);
+    color: var(--primary);
+  }
+  .roadmap-node.late .roadmap-circle {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .roadmap-node.center .roadmap-circle {
+    width: 44px;
+    height: 44px;
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    color: var(--accent);
+    font-size: 9px;
+    line-height: 1.2;
+    text-align: center;
+  }
+  .roadmap-label {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 8px;
+    text-align: center;
+    line-height: 1.3;
+    max-width: 72px;
+  }
+  .roadmap-note {
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-style: italic;
+    margin: 18px 0 0;
+  }
+
+  footer.page {
+    margin-top: 56px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="page">
+    <p class="eyebrow">Greijdanus · vormingslijn</p>
+    <h1>Waar vind ik wat ik nodig heb?</h1>
+    <p class="intro">Elke leerling bouwt gedurende de schoolloopbaan een portfolio op rond vastgestelde vormingsactiviteiten, met reflecties vanuit de vier perspectieven van het <strong>Vormingskompas</strong>: God, jezelf, de ander en de wereld. Kies hieronder je rol voor de stappen die voor jou gelden.</p>
+  </header>
+
+  <div class="notice">
+    <h3>Onderdeel van het schoolexamen</h3>
+    <p>Het portfolio maakt formeel deel uit van het Greijdanus schoolexamen, met een eigen PTA. Er worden geen cijfers gegeven — alleen <strong>voldaan</strong> of <strong>niet voldaan</strong>. De onderbouwing daarvoor staat in het fysieke document en eventuele digitale bijlagen.</p>
+  </div>
+
+  <div class="roadmap">
+    <h3>De vormingslijn: zes fases</h3>
+    <div class="roadmap-track">
+      <div class="roadmap-node early">
+        <div class="roadmap-circle">V1</div>
+        <div class="roadmap-label">Oriënteren</div>
+      </div>
+      <div class="roadmap-node early">
+        <div class="roadmap-circle">V2</div>
+        <div class="roadmap-label">Verkenning</div>
+      </div>
+      <div class="roadmap-node early">
+        <div class="roadmap-circle">V3</div>
+        <div class="roadmap-label">Bewustwording</div>
+      </div>
+      <div class="roadmap-node center">
+        <div class="roadmap-circle">Vormings<br>kompas</div>
+        <div class="roadmap-label">God · jezelf · de ander · de wereld</div>
+      </div>
+      <div class="roadmap-node late">
+        <div class="roadmap-circle">V4</div>
+        <div class="roadmap-label">Verbinding</div>
+      </div>
+      <div class="roadmap-node late">
+        <div class="roadmap-circle">V5</div>
+        <div class="roadmap-label">Verdieping</div>
+      </div>
+      <div class="roadmap-node late">
+        <div class="roadmap-circle">V6</div>
+        <div class="roadmap-label">Oogsten</div>
+      </div>
+    </div>
+    <p class="roadmap-note">Dit voorbeeld toont de vwo-route; pas de fases hier aan op de route van de opleiding waarvoor je deze pagina gebruikt.</p>
+  </div>
+
+  <nav class="roles" role="tablist" aria-label="Kies je rol">
+    <button class="active" role="tab" aria-selected="true" data-role="docent">Docent</button>
+    <button role="tab" aria-selected="false" data-role="mentor">Mentor</button>
+    <button role="tab" aria-selected="false" data-role="leerling">Leerling</button>
+  </nav>
+
+  <section class="panel active" data-panel="docent" role="tabpanel">
+    <p class="role-intro">Vorming komt op twee manieren bij jou terecht: als organisator van een activiteit, of als vakdocent met een los moment waarin vorming een rol speelt. In Learnbeat werkt het portfolio met projecten, waarin reflecties terechtkomen.</p>
+
+    <p class="substep-heading">Als organisator van een activiteit</p>
+    <ol class="steps">
+      <li>
+        <span class="step-num">1</span>
+        <div class="step-body">
+          <h3>Reflectieopdracht opstellen</h3>
+          <p>Formuleer bij je activiteit opdrachten voor de vier perspectieven van het Vormingskompas: God, jezelf, de ander, de wereld.</p>
+          <span class="placeholder">→ link naar voorbeeldopdrachten / format hier invullen</span>
+        </div>
+      </li>
+      <li>
+        <span class="step-num">2</span>
+        <div class="step-body">
+          <h3>Projectsjabloon maken en uitdelen</h3>
+          <p>Maak in Learnbeat een projectsjabloon voor je activiteit en deel dit uit aan de leerlingen. Je kunt de reflectieopdrachten direct in het sjabloon zetten, of ze aanbieden als normaal lesmateriaal.</p>
+          <a class="guide-link" href="#">Selfguide: projectsjabloon aanmaken in Learnbeat</a>
+        </div>
+      </li>
+      <li>
+        <span class="step-num">3</span>
+        <div class="step-body">
+          <h3>Opdracht markeren als portfolio-geschikt</h3>
+          <p>Bied je de reflectie aan via normaal lesmateriaal in plaats van in het sjabloon? Geef dan bij die opdracht aan dat deze in het portfolio geplaatst kan worden. De leerling kiest zelf in welk project (bijv. dat van jouw activiteit) de opdracht terechtkomt.</p>
+          <a class="guide-link" href="#">Selfguide: een opdracht portfolio-geschikt maken</a>
+        </div>
+      </li>
+      <li>
+        <span class="step-num">4</span>
+        <div class="step-body">
+          <h3>Vragen van leerlingen</h3>
+          <p>Voor technische vragen over Learnbeat verwijs je door naar de selfguide; voor inhoudelijke vragen over de reflectie ben jij het eerste aanspreekpunt.</p>
+        </div>
+      </li>
+    </ol>
+
+    <p class="substep-heading">Als vakdocent, bij een los moment</p>
+    <ol class="steps">
+      <li>
+        <span class="step-num">1</span>
+        <div class="step-body">
+          <h3>Opdracht markeren voor het portfolio</h3>
+          <p>Heb je in je vak een opdracht of onderwerp waar vorming een rol in speelt? Je hoeft geen eigen project aan te maken — geef bij die opdracht aan dat deze in het portfolio opgenomen kan worden. De leerling kiest zelf in welk project (vaak het algemene vormingsproject) hij hem plaatst.</p>
+          <a class="guide-link" href="#">Selfguide: een opdracht portfolio-geschikt maken</a>
+        </div>
+      </li>
+    </ol>
+
+    <div class="helpbox">
+      <h3>Hulp nodig?</h3>
+      <p>Neem contact op met [naam / rol invullen] voor vragen over de vormingslijn zelf.</p>
+    </div>
+  </section>
+
+  <section class="panel" data-panel="mentor" role="tabpanel">
+    <p class="role-intro">Je blikt jaarlijks samen met je mentorleerlingen terug op hun vorming van het afgelopen jaar.</p>
+    <ol class="steps">
+      <li>
+        <span class="step-num">1</span>
+        <div class="step-body">
+          <h3>Portfolio bekijken</h3>
+          <p>Bekijk voorafgaand aan het gesprek welke reflecties de leerling het afgelopen jaar heeft vastgelegd.</p>
+          <a class="guide-link" href="#">Selfguide: portfolio van een leerling inzien</a>
+        </div>
+      </li>
+      <li>
+        <span class="step-num">2</span>
+        <div class="step-body">
+          <h3>Terugblikgesprek voeren</h3>
+          <p>Bespreek met de leerling wat hen is opgevallen in de reflecties. Dit gesprek valt vaak samen met een oogstmoment aan het einde van een fase (bijv. einde vwo 4 of vwo 5).</p>
+          <span class="placeholder">→ link naar gesprekshandleiding / vragenkaart hier invullen</span>
+        </div>
+      </li>
+      <li>
+        <span class="step-num">3</span>
+        <div class="step-body">
+          <h3>Bij het examenjaar: eindselectie begeleiden</h3>
+          <p>Help de leerling bij het kiezen welke projecten in de definitieve pdf-export komen.</p>
+        </div>
+      </li>
+      <li>
+        <span class="step-num">4</span>
+        <div class="step-body">
+          <h3>Pdf's ontvangen en naar de drukker sturen</h3>
+          <p>Ontvang van elke mentorleerling de definitieve pdf (rechtstreeks uit Learnbeat of via Canva). Omdat je je eigen mentorleerlingen kent en ook de uitreiking verzorgt, is de check vanzelf overzichtelijk — belangrijker is dat voor jou vaststaat wat er precies verwacht wordt.</p>
+          <a class="guide-link" href="#">Overzicht: deadline en aanlevervorm voor mentoren</a>
+        </div>
+      </li>
+    </ol>
+    <div class="helpbox">
+      <h3>Hulp nodig?</h3>
+      <p>Neem contact op met [naam / rol invullen] voor vragen over de vormingslijn zelf.</p>
+    </div>
+  </section>
+
+  <section class="panel" data-panel="leerling" role="tabpanel">
+    <p class="role-intro">Je legt bij elke vormingsactiviteit een reflectie vast in een project in Learnbeat, en stelt aan het eind van je schoolloopbaan je eigen portfoliodocument samen.</p>
+    <ol class="steps">
+      <li>
+        <span class="step-num">1</span>
+        <div class="step-body">
+          <h3>Algemeen vormingsproject aanmaken</h3>
+          <p>Maak eenmalig je eigen algemene vormingsproject aan in Learnbeat. Daar komen reflecties in terecht die niet bij een specifieke activiteit horen, zoals bij een vakopdracht.</p>
+          <a class="guide-link" href="#">Selfguide: algemeen vormingsproject aanmaken</a>
+        </div>
+      </li>
+      <li>
+        <span class="step-num">2</span>
+        <div class="step-body">
+          <h3>Reflectie invullen</h3>
+          <p>Beantwoord na een activiteit of vakopdracht de opdracht vanuit de vier perspectieven. Is de opdracht portfolio-geschikt gemaakt, dan kies je zelf in welk project (van de activiteit, je algemene project, of een eigen project) hij terechtkomt.</p>
+          <a class="guide-link" href="#">Selfguide: reflectie invullen in Learnbeat</a>
+        </div>
+      </li>
+      <li>
+        <span class="step-num">3</span>
+        <div class="step-body">
+          <h3>Optioneel: eigen project aanmaken</h3>
+          <p>Wil je een activiteit buiten school vastleggen in je vormingsportfolio? Maak daarvoor zelf een project aan in Learnbeat.</p>
+          <a class="guide-link" href="#">Selfguide: zelf een project aanmaken</a>
+        </div>
+      </li>
+      <li>
+        <span class="step-num">4</span>
+        <div class="step-body">
+          <h3>Jaargesprek met je mentor</h3>
+          <p>Blik ieder jaar samen met je mentor terug op wat je hebt geleerd.</p>
+        </div>
+      </li>
+      <li>
+        <span class="step-num">5</span>
+        <div class="step-body">
+          <h3>Volgorde bepalen en pdf-export maken</h3>
+          <p>Zet je projecten in de juiste volgorde en maak een pdf-export, waarbij je selecteert welke projecten worden meegenomen. Dit onderdeel telt mee als PTA-onderdeel van je schoolexamen (voldaan/niet voldaan).</p>
+          <a class="guide-link" href="#">Selfguide: volgorde bepalen en pdf-export maken</a>
+        </div>
+      </li>
+      <li>
+        <span class="step-num">6</span>
+        <div class="step-body">
+          <h3>Optioneel: afwerken in Canva</h3>
+          <p>Wil je zelf de vormgeving bepalen? Verwerk de pdf in een Canva-sjabloon tot een persoonlijker document en download deze daarna weer als pdf.</p>
+          <a class="guide-link" href="#">Selfguide: van Learnbeat-pdf naar Canva</a>
+        </div>
+      </li>
+      <li>
+        <span class="step-num">7</span>
+        <div class="step-body">
+          <h3>Pdf delen met je mentor</h3>
+          <p>Stuur de definitieve pdf (rechtstreeks uit Learnbeat, of je Canva-versie) naar je mentor. Die zorgt dat hij bij de drukker terechtkomt.</p>
+        </div>
+      </li>
+    </ol>
+    <div class="helpbox">
+      <h3>Hulp nodig?</h3>
+      <p>Neem contact op met [naam / rol invullen] voor vragen over de vormingslijn zelf.</p>
+    </div>
+  </section>
+
+  <footer class="page">
+    Deze pagina is een wegwijzer, geen portfolio-omgeving — er staan geen leerlinggegevens op deze pagina.
+  </footer>
+
+</div>
+
+<script>
+  const buttons = document.querySelectorAll('nav.roles button');
+  const panels = document.querySelectorAll('.panel');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+      panels.forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+      document.querySelector('.panel[data-panel="' + btn.dataset.role + '"]').classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
